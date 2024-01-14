@@ -9,7 +9,7 @@ on:
       - 'dags/**'
       
 jobs:
-  sync_scheduler:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
