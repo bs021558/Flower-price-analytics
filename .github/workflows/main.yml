@@ -27,6 +27,6 @@ jobs:
           ssh-keyscan ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
       - name: Copy files to remote server
         run: |
-          cd ${{ github.workspace }}/dags
+          cd ${{ github.workspace }}
           scp -i ~/private-key.pem -r ./* ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:${{ secrets.REMOTE_TARGET }}
           echo "Copied files to remote server"
