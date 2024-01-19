@@ -1,28 +1,15 @@
+from airflow.plugins_manager import AirflowPlugin
+
 import requests
 import os
 
 
-class RequestTool:
-    def __init__(self, api_url: str, service_key: str, base_date: str):
-        self.api_url = api_url
-        self.service_key = service_key,
-        self.base_date = base_date
+class RequestTool(AirflowPlugin):
+    name = "request_tool"
 
-    def prepare_params_for_flower(self, flower_type: int):
-        params = {
-            "kind": "f001",
-            "serviceKey": self.service_key,
-            "baseDate": self.base_date,
-            "flowerGubn": str(flower_type),
-            "dataType": "json",
-            "countPerPage": "999",
-            "currentPage": "1"
-        }
-        return params
-
-    def api_request(self, params):
+    def api_request(api_url: str, params: dict):
         try:
-            response = requests.get(self.api_url, params=params)
+            response = requests.get(api_url, params=params)
             response.raise_for_status()
 
             return response.json()
@@ -36,6 +23,7 @@ class RequestTool:
             raise e
 
 
-class FileManager:
+class FileManager(AirflowPlugin):
+    name='file_manager'
     def remove(filename: str):
         os.remove(filename)
