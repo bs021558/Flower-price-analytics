@@ -15,11 +15,11 @@ class RequestTool(AirflowPlugin):
             return response.json()
 
         except requests.exceptions.HTTPError as e:
-            # HTTP 오류 (예: 404, 500 등)
+            # HTTP error (e.g. 404, 500 etc)
             raise e
 
         except requests.exceptions.RequestException as e:
-            # 그 외의 예외 처리
+            # For other errors
             raise e
 
 
