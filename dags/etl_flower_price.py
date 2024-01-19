@@ -16,6 +16,7 @@ default_args = {
     'execution_date': '{{ds}}'
 }
 
+
 @dag(
     schedule_interval='@daily',
     catchup=True,
@@ -46,7 +47,8 @@ def etl_flower_price():
         api_url = Variable.get('api_url')
 
         # Api request multiple time with various parameters
-        list_json = [RequestTool.api_request(api_url,params) for params in list_params]
+        list_json = [RequestTool.api_request(
+            api_url, params) for params in list_params]
         logging.info('JSON data has been extracted.')
         return list_json
 
@@ -56,18 +58,20 @@ def etl_flower_price():
         filename = f'temp/flower/{execution_date}.csv'
 
         # JSON to DataFrame
-        flower_data = [json_data['response']['items'] for json_data in list_json]
+        flower_data = [json_data['response']['items']
+                       for json_data in list_json]
         np_array = np.concatenate(flower_data)
         df = pd.DataFrame(np_array)
-        
+
         # Cleansing
         df.dropna(inplace=True)
         df.drop_duplicates(inplace=True)
-        
+
         # Save as CSV
         df.to_csv(filename, index=False, encoding="utf-8-sig")
 
-        logging.info(f'Data has been transformed to CSV. The filename is {filename}')
+        logging.info(
+            f'Data has been transformed to CSV. The filename is {filename}')
 
         return filename
 
@@ -89,12 +93,13 @@ def etl_flower_price():
             raise
         logging.info('CSV file has been loaded to OSS.')
         FileManager.remove(filename)
-    
+
     # TaskFlow
     list_params = prepare()
     list_json = extract(list_params)
     filename = transform(list_json)
     load(filename)
+
 
 # DAG instance
 etl_flower_price = etl_flower_price()

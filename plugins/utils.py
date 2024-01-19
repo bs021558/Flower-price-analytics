@@ -24,6 +24,7 @@ class RequestTool(AirflowPlugin):
 
 
 class FileManager(AirflowPlugin):
-    name='file_manager'
+    name = 'file_manager'
+
     def remove(filename: str):
         os.remove(filename)
