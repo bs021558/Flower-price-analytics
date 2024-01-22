@@ -36,14 +36,14 @@ def etl_flower_price():
                 "baseDate": f"{execution_date}",
                 "flowerGubn": str(flower_type),
                 "dataType": "json",
-                "countPerPage": "5",
+                "countPerPage": "9999",
             }
             list_params.append(params)
         logging.info('Parameters for request is ready.')
         return list_params
 
     @task()
-    def extract(list_params: list, execution_date: str):
+    def extract(list_params: list):
         api_url = Variable.get('api_url')
 
         # Api request multiple time with various parameters
@@ -58,8 +58,7 @@ def etl_flower_price():
         filename = f'temp/flower/{execution_date}.csv'
 
         # JSON to DataFrame
-        flower_data = [json_data['response']['items']
-                       for json_data in list_json]
+        flower_data = [json_data['response']['items'] for json_data in list_json]
         np_array = np.concatenate(flower_data)
         df = pd.DataFrame(np_array)
 
@@ -70,8 +69,7 @@ def etl_flower_price():
         # Save as CSV
         df.to_csv(filename, index=False, encoding="utf-8-sig")
 
-        logging.info(
-            f'Data has been transformed to CSV. The filename is {filename}')
+        logging.info(f'Data has been transformed to CSV. The filename is {filename}')
 
         return filename
 
