@@ -15,16 +15,18 @@ class RequestTool(AirflowPlugin):
             return response.json()
 
         except requests.exceptions.HTTPError as e:
-            # HTTP error (e.g. 404, 500 etc)
+            # HTTP 오류 (예: 404, 500 등)
             raise e
 
         except requests.exceptions.RequestException as e:
-            # For other errors
+            # 그 외의 예외 처리
             raise e
 
 
 class FileManager(AirflowPlugin):
-    name = 'file_manager'
-
+    name='file_manager'
     def remove(filename: str):
         os.remove(filename)
+        
+    def getcwd():
+        return os.getcwd()

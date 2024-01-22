@@ -11,7 +11,7 @@ import numpy as np
 default_args = {
     'owner': 'airflow',
     'start_date': datetime(2024, 1, 1),
-    'retries': 1,
+    'retries': 0,
     'retry_delay': timedelta(minutes=5),
     'execution_date': '{{ds}}'
 }
@@ -47,15 +47,15 @@ def etl_flower_price():
         api_url = Variable.get('api_url')
 
         # Api request multiple time with various parameters
-        list_json = [RequestTool.api_request(
-            api_url, params) for params in list_params]
+        list_json = [RequestTool.api_request(api_url, params) for params in list_params]
         logging.info('JSON data has been extracted.')
         return list_json
 
     @task()
     def transform(list_json: list, execution_date: str):
+        current_path = FileManager.getcwd()
         # filename of the csv file to be finally saved
-        filename = f'temp/flower/{execution_date}.csv'
+        filename = f'{current_path}/{execution_date}.csv'
 
         # JSON to DataFrame
         flower_data = [json_data['response']['items'] for json_data in list_json]
