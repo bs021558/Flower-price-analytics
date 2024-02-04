@@ -6,7 +6,6 @@ from utils import RequestTool, FileManager
 from datetime import datetime, timedelta
 import logging
 import pandas as pd
-import numpy as np
 
 default_args = {
     'owner': 'airflow',
@@ -60,8 +59,8 @@ def etl_flower_price():
         # JSON to DataFrame
         flower_data = [json_data['response']['items']
                        for json_data in list_json]
-        np_array = np.concatenate(flower_data)
-        df = pd.DataFrame(np_array)
+        concat_data = sum(flower_data, [])
+        df = pd.DataFrame(concat_data)
 
         # Cleansing
         df.dropna(inplace=True)
