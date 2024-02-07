@@ -48,7 +48,7 @@ def create_external_table():
     #     task_id='create_extension',
     #     postgres_conn_id='postgres_conn',
     #     sql='sql/create_extension.sql',
-    #     parameters={
+    #     params={
     #         'extension_name':extension_name
     #     }
     # )
@@ -57,7 +57,7 @@ def create_external_table():
     #     task_id='create_server_with_fdw',
     #     postgres_conn_id='postgres_conn',
     #     sql='sql/create_server_with_fdw.sql',
-    #     parameters={
+    #     params={
     #         'server_name':server_for_fdw,
     #         'extension_name':extension_name,
     #         'storage_endpoint':storage_endpoint,
@@ -71,7 +71,7 @@ def create_external_table():
         task_id='create_external_table_task',
         postgres_conn_id='postgres_conn',
         sql='sql/create_external_table.sql',
-        parameters={
+        params={
             'table_name':table_name,
             'server_name':server_for_fdw,
             'file_path': f'{file_path}*',
