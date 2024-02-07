@@ -1,1 +1,1 @@
-CREATE EXTENSION IF NOT EXISTS {{ extension_name }};
+CREATE EXTENSION IF NOT EXISTS {{ params.extension_name }};

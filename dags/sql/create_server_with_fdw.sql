@@ -1,8 +1,8 @@
-CREATE SERVER {{ server_name}}
-FOREIGN DATA WRAPPER {{ extension_name }} OPTIONS
+CREATE SERVER {{ params.server_name}}
+FOREIGN DATA WRAPPER {{ params.extension_name }} OPTIONS
 (
-    HOST '{{ storage_endpoint }}',
-    BUCKET '{{ bucket_name }}',
-    ID '{{ key_id }}',
-    KEY '{{ key_secret}}'
+    HOST '{{ params.storage_endpoint }}',
+    BUCKET '{{ params.bucket_name }}',
+    ID '{{ params.key_id }}',
+    KEY '{{ params.key_secret}}'
 );
