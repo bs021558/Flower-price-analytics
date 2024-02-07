@@ -40,7 +40,7 @@ default_args = {
     schedule_interval=None,
     catchup=False,
     default_args=default_args,
-    template_searchpath = [FileManager.get_cwd()]
+    template_searchpath = [FileManager.getcwd()]
 )
 def create_external_table():
     
