@@ -5,6 +5,7 @@ from utils import FileManager
 from datetime import datetime
 
 file_path = Variable.get('oss_path_flower_raw_data')
+schema = 'raw_data'
 table_name = 'external_flower'
 server_for_fdw = 'oss_server'
 columns = '''
@@ -72,7 +73,7 @@ def create_external_table():
         postgres_conn_id='postgres_conn',
         sql='sql/create_external_table.sql',
         params={
-            'table_name':table_name,
+            'table_name':schema_name + table_name,
             'server_name':server_for_fdw,
             'file_path': f'{file_path}*',
             'columns': columns,
