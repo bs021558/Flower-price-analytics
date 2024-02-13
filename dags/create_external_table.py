@@ -73,7 +73,7 @@ def create_external_table():
         postgres_conn_id='postgres_conn',
         sql='sql/create_external_table.sql',
         params={
-            'table_name':schema_name + table_name,
+            'table_name':schema_name + '.' + table_name,
             'server_name':server_for_fdw,
             'file_path': f'{file_path}*',
             'columns': columns,
